@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h1>Interactive Quiz Application</h1>
+
+        <!-- Multiple Choice Question -->
+        <p id="quizResponse"></p>
+        <div id="multipleChoice"></div>
+        
+
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress" style="width: 50%;"></div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="navigation">
+            <button class="nav-button prev">Previous</button>
+            <button class="nav-button next">Next</button>
+        </div>
+        <br/>
+        <button id="submitQuiz" class="nav-button" style="display: none;">Submit</button>
+        <div class="logout">
+        <a href="logout.html">Logout</a>
+    </div>
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+    
+        const firebaseConfig = {
+  apiKey: "AIzaSyBgDZ_bJc3JYa_T5gO85hWx78u8T3pqn58",
+  authDomain: "marcus-quiz-app.firebaseapp.com",
+  projectId: "marcus-quiz-app",
+  storageBucket: "marcus-quiz-app.appspot.com",
+  messagingSenderId: "84005946264",
+  appId: "1:84005946264:web:bcc96a93b53cc55482e1ed"
+};
+    
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+    
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                // User is not signed in, redirect to login page
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+    
+    <script type="module" src="script.js"></script>
+</body>
+</html>

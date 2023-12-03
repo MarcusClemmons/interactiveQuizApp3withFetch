@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-form">
+            <h1 class="header">Login</h1>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button id="signUpBtn">Signup</button>
+            <br>
+            <button id="signInBtn">Login</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import { getAuth,
+                 createUserWithEmailAndPassword,
+                 onAuthStateChanged,
+                 signInWithEmailAndPassword
+        
+        
+        
+        
+        } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+
+        const firebaseConfig = {
+  apiKey: "AIzaSyBgDZ_bJc3JYa_T5gO85hWx78u8T3pqn58",
+  authDomain: "marcus-quiz-app.firebaseapp.com",
+  projectId: "marcus-quiz-app",
+  storageBucket: "marcus-quiz-app.appspot.com",
+  messagingSenderId: "84005946264",
+  appId: "1:84005946264:web:bcc96a93b53cc55482e1ed"
+};
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const signUpBtn = document.getElementById("signUpBtn");
+        const signInBtn = document.getElementById("signInBtn");
+
+        signUpBtn.addEventListener('click', function() {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed up
+                    const user = userCredential.user;
+                    console.log(user);
+                    alert("Your account has been created!"); 
+                    window.location.href = 'quiz.html'; // Redirect to quiz.html
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // Handle Errors here.
+                    console.error("Error signing up:", errorMessage);
+                });
+        });
+
+        signInBtn.addEventListener('click', function() {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    alert("You have signed in successfully!");
+                    window.location.href = 'quiz.html'; // Redirect to quiz.html
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // Handle Errors here.
+                    console.error("Error signing in:", errorMessage);
+                });
+        });
+
+        
+    </script>
+    
+</body>
+</html>
